@@ -4,6 +4,7 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../src/delay.c \
 ../src/lcd_16_4.c \
 ../src/lcd_commands.c \
 ../src/main.c \
@@ -11,6 +12,7 @@ C_SRCS += \
 ../src/system_stm32f4xx.c 
 
 OBJS += \
+./src/delay.o \
 ./src/lcd_16_4.o \
 ./src/lcd_commands.o \
 ./src/main.o \
@@ -18,6 +20,7 @@ OBJS += \
 ./src/system_stm32f4xx.o 
 
 C_DEPS += \
+./src/delay.d \
 ./src/lcd_16_4.d \
 ./src/lcd_commands.d \
 ./src/main.d \

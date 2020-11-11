@@ -47,6 +47,8 @@
 
 /** ---------------------------------- PUBLIC FUNCTIONS  ------------------------ */
 extern void lcd_init(void);
+extern void lcd_send_command(void);
+
 extern void lcd_write_char(void);
 extern void lcd_write_char_x_y(void);
 extern void lcd_write_string(void);

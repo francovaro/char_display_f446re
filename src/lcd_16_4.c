@@ -8,6 +8,7 @@
  */
 #include "stm32f4xx.h"
 #include "lcd_16_4.h"
+#include "delay.h"
 
 /** ---------------------------------- PUBLIC FUNCTIONS DECLARATION ------------------------ */
 static void lcd_hw_init(void);
@@ -31,6 +32,29 @@ void lcd_init(void)
 	 * 9) Entry mode set
 	 */
 	lcd_hw_init();
+
+	/* 1 */
+	Delay_ms(60);
+
+	/* 2 */
+	lcd_function_set(1, 0, 0);
+
+	/* 3 */
+	Delay_ms(5);
+
+	/* 4 */
+	lcd_function_set(1, 0, 0);
+
+	/* 5 */
+	Delay_us(100);
+}
+
+void lcd_send_command(void)
+{
+	PORT_LCD_ENABLE->BSRRL =  PIN_LCD_ENABLE;
+	// wait ....
+	Delay_us(5u);
+	PORT_LCD_ENABLE->BSRRH =  PIN_LCD_ENABLE;
 }
 
 /** ---------------------------------- PRIVATE FUNCTIONS IMPLEMENTATION ------------------------ */

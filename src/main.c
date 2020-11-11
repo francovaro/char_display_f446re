@@ -14,7 +14,7 @@
 
 int main(void)
 {
-
+	Delay_init();
 	lcd_init();
 
 	while(1)
