@@ -1,3 +1,5 @@
+"src/lcd_16_4.o"
+"src/lcd_commands.o"
 "src/main.o"
 "src/syscalls.o"
 "src/system_stm32f4xx.o"
