@@ -37,12 +37,30 @@ typedef enum
 
 typedef struct
 {
-	t_lcd_command	command_id;
-	uint8_t			*data;
-	uint8_t			read_write;
-	uint8_t			command_register;
+	union
+	{
+		uint8_t command_byte;
+		uint8_t db0:1;
+		uint8_t db1:1;
+		uint8_t db2:1;
+		uint8_t db3:1;
+		uint8_t db4:1;
+		uint8_t db5:1;
+		uint8_t db6:1;
+		uint8_t db7:1;
+	};
+}t_command_struct;
+
+typedef struct
+{
+	t_lcd_command		command_id;
+	t_command_struct	data;
+	uint8_t				read_write;
+	uint8_t				command_register;
+	uint8_t				is_constant;
 }lcd_command_struct;
 
-extern void lcd_generic_commands(t_lcd_command command_id);
+extern void lcd_generic_commands(t_lcd_command command_id, uint8_t *data);
+extern void lcd_function_set(uint8_t dl_bit, uint8_t line_number, uint8_t font_type);
 
 #endif /* INC_LCD_COMMANDS_H_ */

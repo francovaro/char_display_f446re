@@ -26,35 +26,56 @@ void lcd_init(void)
 	 * 3) wait >4.1ms
 	 * 4) Function set 0x3x
 	 * 5) wait >100us
-	 * 6) Function set 0x3x - specify the number of lines and character font
-	 * 7) Display OFF
-	 * 8) Display clear
-	 * 9) Entry mode set
+	 * 6) Function set 0x3x
+	 * 7) Function set 0x3x - specify the number of lines and character font
+	 * 8) Display OFF
+	 * 9) Display clear
+	 *10) Entry mode set
 	 */
 	lcd_hw_init();
 
-	/* 1 */
+	/* 1 Initial wait 40 ms */
 	Delay_ms(60);
 
-	/* 2 */
+	/* 2 Funcional set 8bit set */
 	lcd_function_set(1, 0, 0);
 
-	/* 3 */
+	/* 3 wait at least 4.1ms */
 	Delay_ms(5);
 
-	/* 4 */
+	/* 4 Funcional set 8bit set */
 	lcd_function_set(1, 0, 0);
 
-	/* 5 */
-	Delay_us(100);
+	/* 5 wait at least 100us */
+	Delay_us(150);
+
+	/* 6 Funcional set 8bit set */
+	lcd_function_set(1, 0, 0);
+
+	/* 6 Funcional set 8bit set and number of line and character */
+	lcd_function_set(1, 2, 1);
 }
 
 void lcd_send_command(void)
 {
-	PORT_LCD_ENABLE->BSRRL =  PIN_LCD_ENABLE;
-	// wait ....
+	PORT_LCD_ENABLE->BSRRL =  PIN_LCD_ENABLE;	/* set pin E */
 	Delay_us(5u);
-	PORT_LCD_ENABLE->BSRRH =  PIN_LCD_ENABLE;
+	PORT_LCD_ENABLE->BSRRH =  PIN_LCD_ENABLE;	/* clear pin E*/
+}
+
+void lcd_set_data_pin(t_command_struct data_bus)
+{
+
+}
+
+void lcd_set_read_write_pin(uint8_t read_write_bit)
+{
+
+}
+
+void lcd_set_command_register_pin(uint8_t command_register_bit)
+{
+
 }
 
 /** ---------------------------------- PRIVATE FUNCTIONS IMPLEMENTATION ------------------------ */

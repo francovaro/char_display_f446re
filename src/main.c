@@ -11,6 +11,7 @@
 
 #include "stm32f4xx.h"
 #include "lcd_16_4.h"
+#include "delay.h"
 
 int main(void)
 {
