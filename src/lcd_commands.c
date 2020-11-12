@@ -33,15 +33,18 @@ lcd_command_struct lcd_command_list[] =
  */
 void lcd_generic_commands(t_lcd_command command_id, uint8_t data)
 {
-	if (lcd_command_list[command_id].is_constant == 0)	/* no need to manipulate data */
+	t_command_struct data_bus = {.command_byte = 0x00};
+
+	if (lcd_command_list[command_id].is_constant == 1)	/* no need to manipulate data */
 	{
-		lcd_set_data_pin(lcd_command_list[command_id].data);
+		data_bus = lcd_command_list[command_id].data;
 	}
 	else
 	{
-		lcd_command_list[command_id].data.command_byte |= (data);	/* include the parameter */
+		data_bus.command_byte = lcd_command_list[command_id].data.command_byte |= (data);	/* include the parameter */
 	}
 
+	lcd_set_data_pin(data_bus);
 	lcd_set_read_write_pin(lcd_command_list[command_id].read_write);
 	lcd_set_command_register_pin(lcd_command_list[command_id].command_register);
 

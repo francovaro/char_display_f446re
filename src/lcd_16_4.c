@@ -12,6 +12,7 @@
 
 /** ---------------------------------- PUBLIC FUNCTIONS DECLARATION ------------------------ */
 static void lcd_hw_init(void);
+static void lcd_set_pin(uint8_t value, uint16_t pin);
 
 /** ---------------------------------- PUBLIC FUNCTIONS IMPLEMENTATION ------------------------ */
 /**
@@ -52,6 +53,8 @@ void lcd_init(void)
 	/* 6 Funcional set 8bit set */
 	lcd_generic_commands(e_lcd_command_funcional_set, FUNCTION_SET_8_BIT);
 
+	Delay_us(150);	/* wait ? */
+
 	/* 7 Funcional set 8bit set and number of line and character */
 	lcd_generic_commands(e_lcd_command_funcional_set, FUNCTION_SET_8_BIT | FUNCTION_SET_2_LINE | FUNCTION_SET_5_11_CHAR);
 
@@ -81,7 +84,14 @@ void lcd_send_command(void)
  */
 void lcd_set_data_pin(t_command_struct data_bus)
 {
-
+	lcd_set_pin(data_bus.db0, PIN_LCD_DB0);
+	lcd_set_pin(data_bus.db1, PIN_LCD_DB1);
+	lcd_set_pin(data_bus.db2, PIN_LCD_DB2);
+	lcd_set_pin(data_bus.db3, PIN_LCD_DB3);
+	lcd_set_pin(data_bus.db4, PIN_LCD_DB4);
+	lcd_set_pin(data_bus.db5, PIN_LCD_DB5);
+	lcd_set_pin(data_bus.db6, PIN_LCD_DB6);
+	lcd_set_pin(data_bus.db7, PIN_LCD_DB7);
 }
 
 /**
@@ -155,4 +165,21 @@ static void lcd_hw_init(void)
 	GPIO_Init(PORT_LCD_DB6, &GPIO_InitStructure);
 	GPIO_InitStructure.GPIO_Pin = PIN_LCD_DB7;
 	GPIO_Init(PORT_LCD_DB7, &GPIO_InitStructure);
+}
+
+/**
+ *
+ * @param value
+ * @param pin
+ */
+static void lcd_set_pin(uint8_t value, uint16_t pin)
+{
+	if (value == 1)
+	{
+		PORT_LCD_DBx->BSRRL =  pin;
+	}
+	else if (value == 0)
+	{
+		PORT_LCD_DBx->BSRRH =  pin;	/* clear pin E*/
+	}
 }
