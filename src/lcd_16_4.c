@@ -38,22 +38,22 @@ void lcd_init(void)
 	Delay_ms(60);
 
 	/* 2 Funcional set 8bit set */
-	lcd_function_set(1, 0, 0);
+	lcd_generic_commands(e_lcd_command_funcional_set, FUNCTION_SET_8_BIT);
 
 	/* 3 wait at least 4.1ms */
 	Delay_ms(5);
 
 	/* 4 Funcional set 8bit set */
-	lcd_function_set(1, 0, 0);
+	lcd_generic_commands(e_lcd_command_funcional_set, FUNCTION_SET_8_BIT);
 
 	/* 5 wait at least 100us */
 	Delay_us(150);
 
 	/* 6 Funcional set 8bit set */
-	lcd_function_set(1, 0, 0);
+	lcd_generic_commands(e_lcd_command_funcional_set, FUNCTION_SET_8_BIT);
 
 	/* 7 Funcional set 8bit set and number of line and character */
-	lcd_function_set(1, 2, 1);
+	lcd_generic_commands(e_lcd_command_funcional_set, FUNCTION_SET_8_BIT | FUNCTION_SET_2_LINE | FUNCTION_SET_5_11_CHAR);
 
 	/* 8 Display OFF */
 	lcd_generic_commands(e_lcd_command_dsp_on_off, DISPLAY_ON_OFF_CTRL_OFF | DISPLAY_ON_OFF_CTRL_OFF | DISPLAY_ON_OFF_CURSOR_BLINK_OFF);

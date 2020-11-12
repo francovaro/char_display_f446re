@@ -31,7 +31,7 @@ lcd_command_struct lcd_command_list[] =
  * @param command_id
  * @param data
  */
-void lcd_generic_commands(t_lcd_command command_id, uint8_t *data)
+void lcd_generic_commands(t_lcd_command command_id, uint8_t data)
 {
 	if (lcd_command_list[command_id].is_constant == 0)	/* no need to manipulate data */
 	{
@@ -39,33 +39,11 @@ void lcd_generic_commands(t_lcd_command command_id, uint8_t *data)
 	}
 	else
 	{
-		lcd_command_list[command_id].data.command_byte |= (*data);	/* include the parameter */
+		lcd_command_list[command_id].data.command_byte |= (data);	/* include the parameter */
 	}
 
 	lcd_set_read_write_pin(lcd_command_list[command_id].read_write);
 	lcd_set_command_register_pin(lcd_command_list[command_id].command_register);
-
-	lcd_send_command();
-}
-
-/**
- *
- * @param dl_bit
- * @param line_number
- * @param font_type
- */
-void lcd_function_set(uint8_t dl_bit, uint8_t line_number, uint8_t font_type)
-{
-	t_command_struct	function_set_data = {.command_byte = 0x00};
-
-	//data_to_send |= ((dl_bit<<4) | (line_number<<3) | (font_type<<2));
-
-	function_set_data.db2 = font_type;
-	function_set_data.db3 = line_number;
-	function_set_data.db4 = line_number;
-	function_set_data.db5 = 1u;
-
-	lcd_set_data_pin(function_set_data);
 
 	lcd_send_command();
 }

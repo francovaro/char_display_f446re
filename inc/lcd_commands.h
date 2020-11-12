@@ -38,6 +38,15 @@
 #define DISPLAY_ON_OFF_CURSOR_BLINK_ON				(1)
 #define DISPLAY_ON_OFF_CURSOR_BLINK_OFF				(0)
 
+/* Function set options*/
+#define FUNCTION_SET_8_BIT							(1<<4)
+#define FUNCTION_SET_4_BIT							(0)
+
+#define FUNCTION_SET_2_LINE							(1<<3)
+#define FUNCTION_SET_1_LINE							(0)
+
+#define FUNCTION_SET_5_11_CHAR						(1<<2)
+#define FUNCTION_SET_5_8_CHAR						(0)
 /** ---------------------------------- TYPE DEFINITION ------------------------ */
 typedef enum
 {
@@ -80,7 +89,6 @@ typedef struct
 	uint8_t				is_constant;
 }lcd_command_struct;
 
-extern void lcd_generic_commands(t_lcd_command command_id, uint8_t *data);
-extern void lcd_function_set(uint8_t dl_bit, uint8_t line_number, uint8_t font_type);
+extern void lcd_generic_commands(t_lcd_command command_id, uint8_t data);
 
 #endif /* INC_LCD_COMMANDS_H_ */
