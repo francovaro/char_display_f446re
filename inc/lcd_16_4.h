@@ -10,6 +10,9 @@
 #ifndef INC_LCD_16_4_H_
 #define INC_LCD_16_4_H_
 
+/** ---------------------------------- INCLUDE ------------------------ */
+#include "lcd_commands.h"
+
 /** ---------------------------------- DEFINE ------------------------ */
 /* LCD definition */
 #define LCD_MODEL		"MC41605A6W-SPR"
@@ -48,6 +51,9 @@
 /** ---------------------------------- PUBLIC FUNCTIONS  ------------------------ */
 extern void lcd_init(void);
 extern void lcd_send_command(void);
+extern void lcd_set_data_pin(t_command_struct data_bus);
+extern void lcd_set_read_write_pin(uint8_t read_write_bit);
+extern void lcd_set_command_register_pin(uint8_t command_register_bit);
 
 extern void lcd_write_char(void);
 extern void lcd_write_char_x_y(void);

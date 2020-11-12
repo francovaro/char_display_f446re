@@ -18,12 +18,32 @@
 #define LCD_COMMAND		(0u)
 #define LCD_REGISTER	(1u)
 
+/* Entry mode options */
+#define ENTRY_MODE_SET_BLINK_RIGHT_DDRAM_INCREASE	(1<<1)
+#define ENTRY_MODE_SET_BLINK_LEFT_DDRAM_DECREASE	(0u)
+
+#define ENTRY_MODE_SET_SHIFT_ENABLED				(1u)
+#define ENTRY_MODE_SET_SHIFT_DISABLED				(0u)
+
+/* Display mode options */
+#define DISPLAY_ON_OFF_CTRL_ON						(1<<2)
+#define DISPLAY_ON_OFF_CTRL_OFF						(0)
+
+#define DISPLAY_ON_OFF_CTRL_ON						(1<<2)
+#define DISPLAY_ON_OFF_CTRL_OFF						(0)
+
+#define DISPLAY_ON_OFF_CURSOR_ON					(1<<1)
+#define DISPLAY_ON_OFF_CURSOR_OFF					(0)
+
+#define DISPLAY_ON_OFF_CURSOR_BLINK_ON				(1)
+#define DISPLAY_ON_OFF_CURSOR_BLINK_OFF				(0)
+
 /** ---------------------------------- TYPE DEFINITION ------------------------ */
 typedef enum
 {
 	e_lcd_command_clear_display,
 	e_lcd_command_return_home,
-	e_lcd_command_entr_mode_set,
+	e_lcd_command_entry_mode_set,
 	e_lcd_command_dsp_on_off,
 	e_lcd_command_cursor_dsp_shft,
 	e_lcd_command_funcional_set,

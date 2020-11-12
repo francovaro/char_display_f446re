@@ -12,7 +12,7 @@
 volatile uint32_t _req_delay_us;
 
 /**
- *
+ * @brief Initializes the sys tick freq
  */
 void Delay_init(void)
 {
@@ -22,7 +22,7 @@ void Delay_init(void)
 }
 
 /**
- *
+ * @brief
  * @param delay
  */
 void Delay_ms(uint16_t delay)
@@ -35,7 +35,7 @@ void Delay_ms(uint16_t delay)
 }
 
 /**
- *
+ * @brief
  * @param delay
  */
 void Delay_us(uint16_t delay)
@@ -46,7 +46,8 @@ void Delay_us(uint16_t delay)
 }
 
 /**
- *
+ * @brief The systick handler. In this case it lower the delay variable if was set
+ * @note period is 1us
  */
 void SysTick_Handler(void)
 {

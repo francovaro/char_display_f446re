@@ -52,10 +52,22 @@ void lcd_init(void)
 	/* 6 Funcional set 8bit set */
 	lcd_function_set(1, 0, 0);
 
-	/* 6 Funcional set 8bit set and number of line and character */
+	/* 7 Funcional set 8bit set and number of line and character */
 	lcd_function_set(1, 2, 1);
+
+	/* 8 Display OFF */
+	lcd_generic_commands(e_lcd_command_dsp_on_off, DISPLAY_ON_OFF_CTRL_OFF | DISPLAY_ON_OFF_CTRL_OFF | DISPLAY_ON_OFF_CURSOR_BLINK_OFF);
+
+	/* 9 Display clear */
+	lcd_generic_commands(e_lcd_command_clear_display, 0);
+
+	/* 10 Entry mode set */
+	lcd_generic_commands(e_lcd_command_entry_mode_set, ENTRY_MODE_SET_BLINK_RIGHT_DDRAM_INCREASE | ENTRY_MODE_SET_SHIFT_DISABLED);
 }
 
+/**
+ *
+ */
 void lcd_send_command(void)
 {
 	PORT_LCD_ENABLE->BSRRL =  PIN_LCD_ENABLE;	/* set pin E */
@@ -63,19 +75,45 @@ void lcd_send_command(void)
 	PORT_LCD_ENABLE->BSRRH =  PIN_LCD_ENABLE;	/* clear pin E*/
 }
 
+/**
+ *
+ * @param data_bus
+ */
 void lcd_set_data_pin(t_command_struct data_bus)
 {
 
 }
 
+/**
+ *
+ * @param read_write_bit
+ */
 void lcd_set_read_write_pin(uint8_t read_write_bit)
 {
-
+	if (read_write_bit == 1)
+	{
+		PORT_LCD_RW->BSRRL =  PIN_LCD_RW;
+	}
+	else if (read_write_bit == 0)
+	{
+		PORT_LCD_RW->BSRRH =  PIN_LCD_RW;	/* clear pin E*/
+	}
 }
 
+/**
+ *
+ * @param command_register_bit
+ */
 void lcd_set_command_register_pin(uint8_t command_register_bit)
 {
-
+	if (command_register_bit == 1)
+	{
+		PORT_LCD_RS->BSRRL =  PIN_LCD_RS;
+	}
+	else if (command_register_bit == 0)
+	{
+		PORT_LCD_RS->BSRRH =  PIN_LCD_RS;	/* clear pin E*/
+	}
 }
 
 /** ---------------------------------- PRIVATE FUNCTIONS IMPLEMENTATION ------------------------ */
