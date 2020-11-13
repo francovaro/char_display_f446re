@@ -29,9 +29,6 @@
 #define DISPLAY_ON_OFF_CTRL_ON						(1<<2)
 #define DISPLAY_ON_OFF_CTRL_OFF						(0)
 
-#define DISPLAY_ON_OFF_CTRL_ON						(1<<2)
-#define DISPLAY_ON_OFF_CTRL_OFF						(0)
-
 #define DISPLAY_ON_OFF_CURSOR_ON					(1<<1)
 #define DISPLAY_ON_OFF_CURSOR_OFF					(0)
 
