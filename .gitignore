@@ -7,3 +7,6 @@
 *.d
 *.o
 *.mk
+/Debug/
+*.bin
+*.elf
