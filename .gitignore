@@ -10,3 +10,6 @@
 /Debug/
 *.bin
 *.elf
+Debug/char_display_f446re.bin
+*.o
+*.map

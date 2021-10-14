@@ -6,13 +6,19 @@
  *  @author: Francesco Varani
  *  @date  : 11 nov 2020
  */
-#include "stm32f4xx.h"
 #include "lcd_16_4.h"
 #include "delay.h"
+#include "lcd_pin.h"
+
+/** ---------------------------------- DEFINE ------------------------ */
+#define LCD_ROW_0	0x00
+#define LCD_ROW_1	0x40
+#define LCD_ROW_2	0x10
+#define LCD_ROW_3	0x50
 
 /** ---------------------------------- PUBLIC FUNCTIONS DECLARATION ------------------------ */
 static void lcd_hw_init(void);
-static void lcd_set_pin(uint8_t value, uint16_t pin);
+
 
 /** ---------------------------------- PUBLIC FUNCTIONS IMPLEMENTATION ------------------------ */
 /**
@@ -59,7 +65,7 @@ void lcd_init(void)
 	lcd_generic_commands(e_lcd_command_funcional_set, FUNCTION_SET_8_BIT | FUNCTION_SET_2_LINE | FUNCTION_SET_5_11_CHAR);
 
 	/* 8 Display OFF */
-	lcd_generic_commands(e_lcd_command_dsp_on_off, DISPLAY_ON_OFF_CTRL_OFF | DISPLAY_ON_OFF_CTRL_OFF | DISPLAY_ON_OFF_CURSOR_BLINK_OFF);
+	lcd_generic_commands(e_lcd_command_dsp_on_off, DISPLAY_ON_OFF_CTRL_OFF | DISPLAY_ON_OFF_CURSOR_OFF | DISPLAY_ON_OFF_CURSOR_BLINK_OFF);
 
 	/* 9 Display clear */
 	lcd_generic_commands(e_lcd_command_clear_display, 0);
@@ -70,59 +76,24 @@ void lcd_init(void)
 
 /**
  *
+ * @param x
+ * @param y
  */
-void lcd_send_command(void)
+void lcd_set_position(uint8_t x, uint8_t y)
 {
-	PORT_LCD_ENABLE->BSRRL =  PIN_LCD_ENABLE;	/* set pin E */
-	Delay_us(5u);
-	PORT_LCD_ENABLE->BSRRH =  PIN_LCD_ENABLE;	/* clear pin E*/
-}
+	uint8_t	address = x;
+	const uint8_t delta_y_LUT[LCD_MAX_ROW] =
+	{
+			LCD_ROW_0,
+			LCD_ROW_1,
+			LCD_ROW_2,
+			LCD_ROW_3,
+	};
 
-/**
- *
- * @param data_bus
- */
-void lcd_set_data_pin(t_command_struct data_bus)
-{
-	lcd_set_pin(data_bus.db0, PIN_LCD_DB0);
-	lcd_set_pin(data_bus.db1, PIN_LCD_DB1);
-	lcd_set_pin(data_bus.db2, PIN_LCD_DB2);
-	lcd_set_pin(data_bus.db3, PIN_LCD_DB3);
-	lcd_set_pin(data_bus.db4, PIN_LCD_DB4);
-	lcd_set_pin(data_bus.db5, PIN_LCD_DB5);
-	lcd_set_pin(data_bus.db6, PIN_LCD_DB6);
-	lcd_set_pin(data_bus.db7, PIN_LCD_DB7);
-}
+	if ((x < LCD_MAX_COLUMN) && (LCD_MAX_ROW))
+	{
+		address += delta_y_LUT[y];
 
-/**
- *
- * @param read_write_bit
- */
-void lcd_set_read_write_pin(uint8_t read_write_bit)
-{
-	if (read_write_bit == 1)
-	{
-		PORT_LCD_RW->BSRRL =  PIN_LCD_RW;
-	}
-	else if (read_write_bit == 0)
-	{
-		PORT_LCD_RW->BSRRH =  PIN_LCD_RW;	/* clear pin E*/
-	}
-}
-
-/**
- *
- * @param command_register_bit
- */
-void lcd_set_command_register_pin(uint8_t command_register_bit)
-{
-	if (command_register_bit == 1)
-	{
-		PORT_LCD_RS->BSRRL =  PIN_LCD_RS;
-	}
-	else if (command_register_bit == 0)
-	{
-		PORT_LCD_RS->BSRRH =  PIN_LCD_RS;	/* clear pin E*/
 	}
 }
 
@@ -167,19 +138,4 @@ static void lcd_hw_init(void)
 	GPIO_Init(PORT_LCD_DB7, &GPIO_InitStructure);
 }
 
-/**
- *
- * @param value
- * @param pin
- */
-static void lcd_set_pin(uint8_t value, uint16_t pin)
-{
-	if (value == 1)
-	{
-		PORT_LCD_DBx->BSRRL =  pin;
-	}
-	else if (value == 0)
-	{
-		PORT_LCD_DBx->BSRRH =  pin;	/* clear pin E*/
-	}
-}
+
