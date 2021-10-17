@@ -41,6 +41,8 @@ void lcd_init(void)
 	 */
 	lcd_hw_init();
 
+	return;
+
 	/* 1 Initial wait 40 ms */
 	Delay_ms(60);
 
@@ -106,6 +108,8 @@ static void lcd_hw_init(void)
 	GPIO_InitTypeDef 			GPIO_InitStructure;
 
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
 
 	GPIO_InitStructure.GPIO_Pin = PIN_LCD_ENABLE;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Fast_Speed;
@@ -136,6 +140,11 @@ static void lcd_hw_init(void)
 	GPIO_Init(PORT_LCD_DB6, &GPIO_InitStructure);
 	GPIO_InitStructure.GPIO_Pin = PIN_LCD_DB7;
 	GPIO_Init(PORT_LCD_DB7, &GPIO_InitStructure);
+
+
+	GPIO_ResetBits(GPIOA, PIN_LCD_DB4 | PIN_LCD_DB5);
+	GPIO_ResetBits(GPIOB, PIN_LCD_RW | PIN_LCD_ENABLE | PIN_LCD_DB0 | PIN_LCD_DB1 | PIN_LCD_DB2 | PIN_LCD_DB3);
+	GPIO_ResetBits(GPIOC, PIN_LCD_RS | PIN_LCD_DB6 | PIN_LCD_DB7);
 }
 
 
